@@ -9,12 +9,42 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
-
+import {takeEvery, put} from 'redux-saga/effects';
+import axios from 'axios';
 // Create the rootSaga generator function
 function* rootSaga() {
-
+    console.log('watcher saga');
+    yield takeEvery('GET_IMAGES', getImages);
+    yield takeEvery('GET_TAGS', getTags);
+    yield takeEvery('ADD_TAGS', addTags)
 }
 
+function* getImages(action){
+    try{
+        const elementsResponse = yield axios.get(`/api/images`);
+        yield put({ type: 'SET_IMAGES', payload: elementsResponse.data });
+    }catch(err){
+        console.log('Error in GET IMAGES request:', err);
+    };
+}
+
+function* getTags(action){
+    try{
+        const elementsResponse = yield axios.get(`/api/tags`);
+        yield put({ type: 'SET_TAGS', payload: elementsResponse.data });
+    }catch(err){
+        console.log('Error in GET TAGS request:', err);
+    };
+}
+
+function* addTags(action){
+    try{
+        yield axios.post('/api/images', action.payload);
+        yield put({type:'GET_IMAGES'});
+    }catch(err){
+        console.log('Error in POST fav request:', err);
+    };
+}
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
