@@ -32,7 +32,7 @@ class ImageCard extends Component {
         console.log('TAG ME:', this.props.tagList);
         return (
             <div>
-                <p>{}</p>
+                <p>title</p>
                 <Card className="moodCard">
                     <CardActionArea>
                         <CardMedia>
