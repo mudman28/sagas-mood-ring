@@ -1,6 +1,6 @@
 .moodCard {
     width: 750px;
-    height: 500px;
+    height: 450px;
     border: 6px solid rgb(110, 80, 192);
     
 }
@@ -24,6 +24,19 @@
 }
 
 
+h1 {
+    text-align: center;
+    padding: 7px;
+    color: #796ceebd;
+    text-shadow: 2px 2px 1px rgb(86, 183, 212);
+}
+
+
+h3 {
+    text-align: center;
+    padding: 7px;
+    color: rgb(86, 183, 212);
+}
 
 
 

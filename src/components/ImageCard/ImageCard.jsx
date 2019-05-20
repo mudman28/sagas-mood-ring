@@ -11,16 +11,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 //import Typography from '@material-ui/core/Typography';
 class ImageCard extends Component {
     state ={
-        name : '',
-        tags_id : 0
+        tags_id : ''
     }
 
-    componentDidMount(){
-        console.log();
-        
-        this.props.dispatch({ type: 'GET_IMAGES' })
-        this.props.dispatch({ type: 'GET_TAGS' })
-    }
 
     handleTagChange =(event)=> {
         console.log(event.target.value);
@@ -29,23 +22,27 @@ class ImageCard extends Component {
         })
     }
 
+    handleAddTag =(event)=> {
+        console.log(event.target.value);
+        this.props.dispatch({type: 'ADD_TAGS', payload: this.state})
+    }
 
     render() {
         console.log('SEE ME:', this.props.imageList);
         console.log('TAG ME:', this.props.tagList);
         return (
             <div>
-                <p></p>
+                <h1>{this.props.imageTitle}</h1>
                 <Card className="moodCard">
                     <CardActionArea>
                         <CardMedia>
-                            <img src={this.props.link} alt="pic"/>
+                            <img src={this.props.imagePath} alt="pic"/>
                             
                         </CardMedia>
                 
                     </CardActionArea>
                 </Card>
-                <p>Tags: </p> 
+                <h3>Tags: {this.props.tagName}</h3> 
                 <select className="tagSelect" onChange={this.handleTagChange}>
                     <option value="" disabled selected>Select Tag</option> 
                     {this.props.tagList.map(tags =>{
@@ -54,7 +51,7 @@ class ImageCard extends Component {
                         )
                     })}   
                 </select>
-                <button className="addTag">Apply Tag</button>
+                <button className="addTag" onClick={this.handleAddTag}>Apply Tag</button>
             </div>
         );
     }
@@ -63,7 +60,6 @@ class ImageCard extends Component {
 
 
 const mapStateToProps = reduxState => ({
-    imageList : reduxState.images,
     tagList : reduxState.tags
 })
 

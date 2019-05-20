@@ -6,7 +6,7 @@ class Header extends Component {
     render() {
         return (
             <div className ="banner">
-                <p className ="head">Mood Ring Carousel</p>
+                <p className ="head">Mood Ring</p>
             </div>
         );
     }
