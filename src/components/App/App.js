@@ -14,7 +14,7 @@ class App extends Component {
   handlePrevious = () => {
     if(this.state.page === 1){
       this.setState({
-        page: 1
+        page: 5
     }) 
     }
     else{

@@ -37,13 +37,19 @@ class ImageCard extends Component {
                 <Card className="moodCard fade">
                     <CardActionArea>
                         <CardMedia>
-                            <img src={this.props.imagePath} alt={this.props.imageId}/>
+                            <img src={this.props.imagePath} alt={this.props.imageTitle}/>
                             
                         </CardMedia>
                 
                     </CardActionArea>
                 </Card>
-                <h3>Tags: {this.props.tagName}</h3> 
+                {this.props.imageList.map((image, i) => {
+                if(image.id === id)
+                return(
+                    <h3>Tags: {image.name}</h3>
+                )
+              })}
+                 
                 <select className="tagSelect" onChange={this.handleTagChange}>
                     <option value="" disabled defaultValue>Select Tag</option> 
                     {this.props.tagList.map(tags =>{
@@ -53,6 +59,7 @@ class ImageCard extends Component {
                     })}   
                 </select>
                 <button className="addTag" onClick={this.handleAddTag}>Apply Tag</button>
+
             </div>
         );
     }
@@ -62,6 +69,7 @@ class ImageCard extends Component {
 
 const mapStateToProps = reduxState => ({
     tagList : reduxState.tags,
+    imageList : reduxState.images
 })
 
 export default connect(mapStateToProps)(ImageCard);

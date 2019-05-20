@@ -9,6 +9,12 @@ CREATE TABLE "tags" (
   "name" VARCHAR(80) NOT NULL
 );
 
+CREATE TABLE "image_tags" (
+  	"id" SERIAL PRIMARY KEY,
+	"images_id" INT REFERENCES "images",
+	"tags_id" INT REFERENCES "tags"
+);
+
 INSERT INTO "images" ("title", "path")
 VALUES 
 ('Abstract Shapes', 'images/AbstractShapes.jpg'),
