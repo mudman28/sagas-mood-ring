@@ -11,12 +11,16 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import {takeEvery, put} from 'redux-saga/effects';
 import axios from 'axios';
+
+const allImages = []
+
 // Create the rootSaga generator function
 function* rootSaga() {
-    console.log('watcher saga');
+    console.log('imageData');
     yield takeEvery('GET_IMAGES', getImages);
     yield takeEvery('GET_TAGS', getTags);
-    yield takeEvery('ADD_TAGS', addTags)
+    yield takeEvery('ADD_TAGS', addTags);
+    yield takeEvery('NEW_TAGS', getNewTags)
 }
 
 function* getImages(action){
@@ -39,17 +43,28 @@ function* getTags(action){
 
 function* addTags(action){
     try{
-        yield axios.post('/api/images', action.payload);
-        yield put({type:'GET_IMAGES'});
+        yield axios.post('/api/images/addtag', action.payload);
+        yield put({type:'NEW_TAGS'});
     }catch(err){
-        console.log('Error in POST fav request:', err);
+        console.log('Error in POST addTags request:', err);
+    };
+}
+
+function* getNewTags() {
+    try{
+        const elementsResponse = yield axios.get('/api/images/addtag');
+        yield put({ type: 'NEW_TAGS', payload: elementsResponse.data })
+    }catch(err){
+        console.log('Error in GET NEW TAGS request:', err);
     };
 }
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
+
+
 // Used to store images returned from the server
-const images = (state = [], action) => {
+const images = (state = allImages, action) => {
     switch (action.type) {
         case 'SET_IMAGES':
             return action.payload;
@@ -60,11 +75,22 @@ const images = (state = [], action) => {
 
 // Used to store the images tags (e.g. 'Inspirational', 'Calming', 'Energy', etc.)
 const tags = (state = [], action) => {
+    console.log();
+    
     switch (action.type) {
         case 'SET_TAGS':
             return action.payload;
         default:
             return state;
+    }
+}
+const newTags = (state=[], action) => {
+    console.log('in newTags', action.payload);
+    switch(action.type) {
+        case 'NEW_TAGS':
+            return action.payload
+        default:
+            return state
     }
 }
 
@@ -73,6 +99,7 @@ const storeInstance = createStore(
     combineReducers({
         images,
         tags,
+        newTags
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

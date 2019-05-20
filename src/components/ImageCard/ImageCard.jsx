@@ -11,12 +11,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 //import Typography from '@material-ui/core/Typography';
 class ImageCard extends Component {
     state ={
+        image_id : '',
         tags_id : ''
     }
 
 
     handleTagChange =(event)=> {
-        console.log(event.target.value);
+        console.log('tag', event.target.value);
         this.setState({
             tags_id : event.target.value
         })
@@ -28,23 +29,22 @@ class ImageCard extends Component {
     }
 
     render() {
-        console.log('SEE ME:', this.props.imageList);
-        console.log('TAG ME:', this.props.tagList);
+        console.log('tag', this.state)
         return (
             <div>
                 <h1>{this.props.imageTitle}</h1>
                 <Card className="moodCard">
                     <CardActionArea>
                         <CardMedia>
-                            <img src={this.props.imagePath} alt="pic"/>
+                            <img src={this.props.imagePath} alt={this.props.imageId}/>
                             
                         </CardMedia>
                 
                     </CardActionArea>
                 </Card>
-                <h3>Tags: {this.props.tagName}</h3> 
+                <h3>Tags: </h3> 
                 <select className="tagSelect" onChange={this.handleTagChange}>
-                    <option value="" disabled selected>Select Tag</option> 
+                    <option value="" disabled defaultValue>Select Tag</option> 
                     {this.props.tagList.map(tags =>{
                         return(
                             <option value={tags.id}>{tags.name}</option>
