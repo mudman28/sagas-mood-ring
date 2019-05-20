@@ -11,14 +11,15 @@ import CardMedia from '@material-ui/core/CardMedia';
 //import Typography from '@material-ui/core/Typography';
 class ImageCard extends Component {
     state ={
-        image_id : '',
-        tags_id : ''
+        image_id : 0,
+        tags_id : 0
     }
 
 
     handleTagChange =(event)=> {
         console.log('tag', event.target.value);
         this.setState({
+            image_id: this.props.imageId,
             tags_id : event.target.value
         })
     }
@@ -33,7 +34,7 @@ class ImageCard extends Component {
         return (
             <div>
                 <h1>{this.props.imageTitle}</h1>
-                <Card className="moodCard">
+                <Card className="moodCard fade">
                     <CardActionArea>
                         <CardMedia>
                             <img src={this.props.imagePath} alt={this.props.imageId}/>
@@ -42,7 +43,7 @@ class ImageCard extends Component {
                 
                     </CardActionArea>
                 </Card>
-                <h3>Tags: </h3> 
+                <h3>Tags: {this.props.tagName}</h3> 
                 <select className="tagSelect" onChange={this.handleTagChange}>
                     <option value="" disabled defaultValue>Select Tag</option> 
                     {this.props.tagList.map(tags =>{
@@ -60,7 +61,7 @@ class ImageCard extends Component {
 
 
 const mapStateToProps = reduxState => ({
-    tagList : reduxState.tags
+    tagList : reduxState.tags,
 })
 
 export default connect(mapStateToProps)(ImageCard);

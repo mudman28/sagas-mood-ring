@@ -62,6 +62,7 @@ class App extends Component {
                     imageId={image.id}
                     imageTitle={image.title}
                     imagePath={image.path} 
+                    tagName={image.name}
                   />
                 )
               })}
