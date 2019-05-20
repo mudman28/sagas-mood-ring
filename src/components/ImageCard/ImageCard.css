@@ -9,10 +9,19 @@
     font-display: center ;
     font-size: 15px;
     height: 40px;
-    width: 170px
+    width: 170px;
+    background:rgb(96, 107, 255);
+    color: rgb(107, 199, 228)
 }
 
-
+.addTag{
+    font-display: center ;
+    font-size: 15px;
+    height: 40px;
+    width: 170px;
+    background: rgb(86, 183, 212);
+    color: rgb(110, 80, 192);
+}
 
 
 

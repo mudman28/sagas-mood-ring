@@ -9,11 +9,11 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 //import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 //import Typography from '@material-ui/core/Typography';
-
-
-
-
 class ImageCard extends Component {
+    state ={
+        name : '',
+        tags_id : 0
+    }
 
     componentDidMount(){
         console.log();
@@ -22,9 +22,12 @@ class ImageCard extends Component {
         this.props.dispatch({ type: 'GET_TAGS' })
     }
 
-    handleFavClick = (event) => {
- 
-    };
+    handleTagChange =(event)=> {
+        console.log(event.target.value);
+        this.setState({
+            tags_id : event.target.value
+        })
+    }
 
 
     render() {
@@ -43,7 +46,7 @@ class ImageCard extends Component {
                     </CardActionArea>
                 </Card>
                 <p>Tags: </p> 
-                <select className="tagSelect">
+                <select className="tagSelect" onChange={this.handleTagChange}>
                     <option value="" disabled selected>Select Tag</option> 
                     {this.props.tagList.map(tags =>{
                         return(
@@ -51,6 +54,7 @@ class ImageCard extends Component {
                         )
                     })}   
                 </select>
+                <button className="addTag">Apply Tag</button>
             </div>
         );
     }
